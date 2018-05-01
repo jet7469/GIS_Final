@@ -4,12 +4,24 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 		<title>Final Project</title>
-		<link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">
-		<link rel="stylesheet" href="style.css"></link>
+		<link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script>var dojoConfig = { parseOnLoad: true };</script>
 		<script src="https://js.arcgis.com/3.24/"></script>
 		<script src="map.js"></script>
 	</head>
 	<body>
-		<div id="mapDiv"></div>
+		<div id="container">
+			<div class="card" id="layerListPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'right'">
+				<div class="card-body">
+					<h5 class="card-title">Layers</h5>
+					<p class="card-text" style="font-size:12px">Check or uncheck a layer to add or remove it from the map.</p>
+    				<div id="legend"></div>
+    			</div>
+			</div>
+			
+			<div id="mapDiv" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'"></div>
+		</div>
 	</body>
 </html>
