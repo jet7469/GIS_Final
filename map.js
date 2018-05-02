@@ -1,6 +1,3 @@
-var map;
-var layer2017;
-var layer2016;
 
 require([
 	"esri/map",
@@ -18,14 +15,14 @@ function(Map, CSVLayer, SimpleMarkerSymbol, UniqueValueRenderer,
 	HeatmapRenderer, Color, LayerList) {
 	
 	//Create map
-	map = new Map("mapDiv", {
+	var map = new Map("mapDiv", {
 		basemap: "streets",
 		zoom: 4,
     	center: [-55, 32]
 	});
 	
 	//Create default symbol for renderer
-	var defaultSymbol = new SimpleMarkerSymbol();
+	var defaultSymbol = new SimpleMarkerSymbol({size: 1});
 	var defaultColor = new Color([0,0,0,0.5]);
 	
 	//Create unique value renderer
@@ -40,17 +37,37 @@ function(Map, CSVLayer, SimpleMarkerSymbol, UniqueValueRenderer,
 	renderer.addValue("6", new SimpleMarkerSymbol({size: 18, color: defaultColor}));
 	renderer.addValue("7", new SimpleMarkerSymbol({size: 21, color: defaultColor}));
 	
-	
 	//Create CSVLayers
-	layer2017 = new CSVLayer("2017.csv");
+	//2017
+	var layer2017 = new CSVLayer("csv/2017.csv");
 	layer2017.setRenderer(renderer);
 	map.addLayer(layer2017);
 	
-	layer2016 = new CSVLayer("2016.csv");
+	//2016
+	var layer2016 = new CSVLayer("csv/2016.csv");
 	layer2016.setRenderer(renderer);
 	map.addLayer(layer2016);
 	
-	//TODO: Layers for years 2012-2015 when CSVs are ready
+	//2015
+	var layer2015 = new CSVLayer("csv/2015.csv");
+	layer2015.setRenderer(renderer);
+	map.addLayer(layer2015)
+	
+	//2014
+	var layer2014 = new CSVLayer("csv/2014.csv");
+	layer2014.setRenderer(renderer);
+	map.addLayer(layer2014);
+	
+	//2013
+	var layer2013 = new CSVLayer("csv/2013.csv");
+	layer2013.setRenderer(renderer);
+	map.addLayer(layer2013);
+	
+	//2012	
+	var layer2012 = new CSVLayer("csv/2012.csv");
+	layer2012.setRenderer(renderer);
+	map.addLayer(layer2012);
+	
 	
 	//Heat map renderer
 	var heatmapRenderer = new HeatmapRenderer({
@@ -58,12 +75,13 @@ function(Map, CSVLayer, SimpleMarkerSymbol, UniqueValueRenderer,
 	});
 	
 	//Heat map layer
-	var heatmap = new CSVLayer("all_years.csv");
+	var heatmap = new CSVLayer("csv/all_years.csv");
 	heatmap.setRenderer(heatmapRenderer);
 	map.addLayer(heatmap);
 	
 	//TODO: clip for heat map so its just over land/US?
 	
+	//set layers for the LayerList
 	var allLayers = [
 		{
 			layer: heatmap,
@@ -77,16 +95,32 @@ function(Map, CSVLayer, SimpleMarkerSymbol, UniqueValueRenderer,
 			layer: layer2016,
 			title: "2016",
 			showLegend: false
+		}, {
+			layer: layer2015,
+			title: "2015",
+			showLegend: false
+		}, {
+			layer: layer2014,
+			title: "2014",
+			showLegend: false,
+		}, {
+			layer: layer2013,
+			title: "2013",
+			showLegend: false,
+		}, {
+			layer: layer2012,
+			title: "2012",
+			showLegend: false,
 		}
 	];
 	
 	//TODO: Set it so only 2017 shows on startup
 	
+	//Add LayerList
 	var layerlist = new LayerList({
 		map: map,
 		showLegend: true,
 		layers: allLayers
 	}, "legend");
 	
-
 });
